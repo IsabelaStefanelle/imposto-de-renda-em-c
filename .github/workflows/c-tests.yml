@@ -1,1 +1,25 @@
+name: Testes C - Imposto de Renda
 
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar compilador C
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
+      - name: Compilar programa principal
+        run: gcc main.c imposto.c -o main
+
+      - name: Compilar testes
+        run: gcc tests.c imposto.c -lm -o tests
+
+      - name: Executar testes
+        run: ./tests
